@@ -154,10 +154,11 @@ class Page_FO
         $this->header .= '       </div>';
         if (userCanAdmin()) {
             $this->header .= '       <div class="acces_bo">';
-            $this->header .= '          <a href="index.php?page=home">';
+            $this->header .= '          <a href="index.php?page=shop">';
             $this->header .= '             <img src="images/interface/param.png" />';
             $this->header .= '          </a>';
             $this->header .= '       </div>';
+            // header('Location: index.php?page=home');
         }
         $this->header .= '   </div>';
 

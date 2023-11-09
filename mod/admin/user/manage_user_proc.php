@@ -1,7 +1,7 @@
 <?php
 $bdd = new Data();
 
-if(isset($_POST) && !empty($_POST)){
+if (isset($_POST) && !empty($_POST)) {
     // On revient d'un formulaire
 
     // Préparation des informations récuperées du formulaire
@@ -14,16 +14,18 @@ if(isset($_POST) && !empty($_POST)){
     $h['fk_pays'] = $_POST['form_pays'];
     $h['fk_langue'] = $_POST['form_langue'];
     $h['login'] = $_POST['form_login'];
-    $h['isAdmin'] = (isset($_POST['form_isAdmin'])?1:0);
-    if(!empty($_POST['form_password']))
-        $h['password'] = md5($_POST['form_password']);
+    $h['isAdmin'] = (isset($_POST['form_isAdmin']) ? 1 : 0);
+    if (!empty($_POST['form_password']))
+        // $raw_password = $_POST['form_password'];
+        // $h['password'] = md5($_POST['form_password']);
+        $h['password'] = password_hash($_POST['form_password'], PASSWORD_DEFAULT);
 
     // Gestion de l'avatar
-    if(isset($_FILES) && !empty($_FILES) && !empty($_FILES['my_file']['name'])){
+    if (isset($_FILES) && !empty($_FILES) && !empty($_FILES['my_file']['name'])) {
 
         // Generation d'un nom unique
-        $tab_name = explode('.',$_FILES['my_file']['name']);
-        $unique_name = uniqid('img_').'.'.$tab_name[count($tab_name)-1];
+        $tab_name = explode('.', $_FILES['my_file']['name']);
+        $unique_name = uniqid('img_') . '.' . $tab_name[count($tab_name) - 1];
 
         // Préparation de l'upload
         $uploaddir = 'images/avatar/';
@@ -34,25 +36,25 @@ if(isset($_POST) && !empty($_POST)){
     }
 
     // Test pour savoir si on ajoute ou on modifie
-    if($_POST['id_user'] > 0){
+    if ($_POST['id_user'] > 0) {
         // Update de BDD
         $id_user = $_POST['id_user'];
-        $bdd->sql_update('t_user',$id_user, $h);
-    }else{
+        $bdd->sql_update('t_user', $id_user, $h);
+    } else {
         // Ajout en BDD
-        $id_user = $bdd->sql_insert('t_user',$h);
+        $id_user = $bdd->sql_insert('t_user', $h);
     }
 
     // Redirection
-    header('Location: index.php?page=manage_user&id_user='.$id_user);
+    header('Location: index.php?page=manage_user&id_user=' . $id_user);
 }
 
 // Vérification pour Ajout / Modification
 if (isset($_GET['id_user']) && !empty($_GET['id_user'])) {
     // Modification
     $id_user = $_GET['id_user'];
-    $data_user = $bdd->build_r_from_id('t_user',$id_user);
-}else{
+    $data_user = $bdd->build_r_from_id('t_user', $id_user);
+} else {
     // On est en Creation
     $id_user = 0;
     $data_user = array();
@@ -74,104 +76,103 @@ if (isset($_GET['id_user']) && !empty($_GET['id_user'])) {
 $html = '   <div class="form-style">';
 
 // Gestion du Titre de la page (Modification ou Ajout)
-if($id_user > 0){
+if ($id_user > 0) {
     $html .= '       <h1>Modification Utilisateur<span>Modifier un utilisateur...</span></h1>';
-}else{
+} else {
     $html .= '       <h1>Ajout Utilisateur<span>Ajouter un utilisateur...</span></h1>';
 }
 
 // Debut du Formulaire HTML
-$html.= '       <form method="POST" action="index.php?page=manage_user" enctype="multipart/form-data">';
+$html .= '       <form method="POST" action="index.php?page=manage_user" enctype="multipart/form-data">';
 
 // Nom et Prénom
-$html.= '           <div class="section"><span>1</span>Nom et Prénom</div>';
-$html.= '           <div class="inner-wrap-l">';
-$html.= '               <label>Nom <input type="text" name="form_nom" value="'.$data_user['nom'].'"/></label>';
-$html.= '           </div>';
-$html.= '           <div class="inner-wrap-r">';
-$html.= '               <label>Prénom <input type="text" name="form_prenom" value="'.$data_user['prenom'].'"/></label>';
-$html.= '           </div>';
-$html.= '           <div style="clear:both;"></div>';
+$html .= '           <div class="section"><span>1</span>Nom et Prénom</div>';
+$html .= '           <div class="inner-wrap-l">';
+$html .= '               <label>Nom <input type="text" name="form_nom" value="' . $data_user['nom'] . '"/></label>';
+$html .= '           </div>';
+$html .= '           <div class="inner-wrap-r">';
+$html .= '               <label>Prénom <input type="text" name="form_prenom" value="' . $data_user['prenom'] . '"/></label>';
+$html .= '           </div>';
+$html .= '           <div style="clear:both;"></div>';
 
 // Information Connexion et Accès BO
-$html.= '           <div class="section"><span>2</span>Informations connexion et Accès Back Office</div>';
-$html.= '           <div class="inner-wrap-l">';
-$html.= '               <label>Login <input type="text" name="form_login" value="'.$data_user['login'].'"/></label>';
-$html.= '               <label>Mot de passe <input type="password" name="form_password" value=""/></label>';
-$html.= '           </div>';
-$html.= '           <div class="inner-wrap-r">';
-$html.= '               <label>Accès au Back Office <input type="checkbox" '.(($data_user['isAdmin'])? ' checked="checked" ' : '').' name="form_isAdmin" value="1"/></label>';
-$html.= '           </div>';
-$html.= '           <div style="clear:both;"></div>';
+$html .= '           <div class="section"><span>2</span>Informations connexion et Accès Back Office</div>';
+$html .= '           <div class="inner-wrap-l">';
+$html .= '               <label>Login <input type="text" name="form_login" value="' . $data_user['login'] . '"/></label>';
+$html .= '               <label>Mot de passe <input type="password" name="form_password" value=""/></label>';
+$html .= '           </div>';
+$html .= '           <div class="inner-wrap-r">';
+$html .= '               <label>Accès au Back Office <input type="checkbox" ' . (($data_user['isAdmin']) ? ' checked="checked" ' : '') . ' name="form_isAdmin" value="1"/></label>';
+$html .= '           </div>';
+$html .= '           <div style="clear:both;"></div>';
 
 // Adresse
-$html.= '           <div class="section"><span>3</span>Adresse</div>';
-$html.= '           <div class="inner-wrap-l">';
-$html.= '               <label>Adresse <textarea name="form_adresse_1" rows="8">'.$data_user['adresse_1'].'</textarea></label>';
-$html.= '           </div>';
-$html.= '           <div class="inner-wrap-r">';
-$html.= '               <label>Code Postal <input type="text" pattern="[0-9]{5}" name="form_cp" value="'.$data_user['cp'].'"/></label>';
-$html.= '               <label>Ville';
+$html .= '           <div class="section"><span>3</span>Adresse</div>';
+$html .= '           <div class="inner-wrap-l">';
+$html .= '               <label>Adresse <textarea name="form_adresse_1" rows="8">' . $data_user['adresse_1'] . '</textarea></label>';
+$html .= '           </div>';
+$html .= '           <div class="inner-wrap-r">';
+$html .= '               <label>Code Postal <input type="text" pattern="[0-9]{5}" name="form_cp" value="' . $data_user['cp'] . '"/></label>';
+$html .= '               <label>Ville';
 $sql_ville = "SELECT * FROM t_ville ORDER BY nom ASC";
 $datas_ville = $bdd->getData($sql_ville);
-$html.= '                   <select name="form_ville" id="form_ville">';
-$html.= '                       <option value="0">Sélection Ville</option>';
-foreach($datas_ville as $data_ville){
-    $html.= '                   <option value="'.$data_ville['id'].'" '.(($data_user['fk_ville'] == $data_ville['id'])?' selected ':'').'>'.$data_ville['nom'].'</option>';
+$html .= '                   <select name="form_ville" id="form_ville">';
+$html .= '                       <option value="0">Sélection Ville</option>';
+foreach ($datas_ville as $data_ville) {
+    $html .= '                   <option value="' . $data_ville['id'] . '" ' . (($data_user['fk_ville'] == $data_ville['id']) ? ' selected ' : '') . '>' . $data_ville['nom'] . '</option>';
 }
 
-$html.= '                   </select>';
-$html.= '               </label>';
+$html .= '                   </select>';
+$html .= '               </label>';
 
 // Pays
-$html.= '               <label>Pays';
+$html .= '               <label>Pays';
 $sql_pays = "SELECT * FROM t_pays ORDER BY nom ASC";
 $datas_pays = $bdd->getData($sql_pays);
-$html.= '                   <select name="form_pays" id="form_pays">';
-$html.= '                       <option value="0">Sélection Pays</option>';
-foreach($datas_pays as $data_pays){
-    $html.= '                   <option value="'.$data_pays['id'].'" '.(($data_user['fk_pays'] == $data_pays['id'])?' selected ':'').'>'.$data_pays['nom'].'</option>';
+$html .= '                   <select name="form_pays" id="form_pays">';
+$html .= '                       <option value="0">Sélection Pays</option>';
+foreach ($datas_pays as $data_pays) {
+    $html .= '                   <option value="' . $data_pays['id'] . '" ' . (($data_user['fk_pays'] == $data_pays['id']) ? ' selected ' : '') . '>' . $data_pays['nom'] . '</option>';
 }
-$html.= '                   </select>';
-$html.= '               </label>';
+$html .= '                   </select>';
+$html .= '               </label>';
 
 // Langue
-$html.= '               <label>Langue';
+$html .= '               <label>Langue';
 $sql_langue = "SELECT * FROM t_langue ORDER BY nom ASC";
 $datas_langue = $bdd->getData($sql_langue);
-$html.= '                   <select name="form_langue" id="form_langue">';
-$html.= '                       <option value="0">Sélection Langue</option>';
-foreach($datas_langue as $data_langue){
-    $html.= '                   <option value="'.$data_langue['id'].'" '.(($data_user['fk_langue'] == $data_langue['id'])?' selected ':'').'>'.$data_langue['nom'].'</option>';
+$html .= '                   <select name="form_langue" id="form_langue">';
+$html .= '                       <option value="0">Sélection Langue</option>';
+foreach ($datas_langue as $data_langue) {
+    $html .= '                   <option value="' . $data_langue['id'] . '" ' . (($data_user['fk_langue'] == $data_langue['id']) ? ' selected ' : '') . '>' . $data_langue['nom'] . '</option>';
 }
-$html.= '                   </select>';
-$html.= '               </label>';
+$html .= '                   </select>';
+$html .= '               </label>';
 
 
-$html.= '           </div>';
-$html.= '           <div style="clear:both;"></div>';
+$html .= '           </div>';
+$html .= '           <div style="clear:both;"></div>';
 
 // Avatar
-$html.= '           <div class="section"><span>4</span>Avatar</div>';
-$html.= '           <div class="inner-wrap">';
-$html.= '               <label>Avatar <input type="file" name="my_file"/>';
-if(is_file('images/avatar/'.$data_user['avatar'])){
-    $html.= '               <div class="avatar"><img src="images/avatar/'.$data_user['avatar'].'" /></div>';
-    $html.= '               <div style="clear:both;"></div>';
+$html .= '           <div class="section"><span>4</span>Avatar</div>';
+$html .= '           <div class="inner-wrap">';
+$html .= '               <label>Avatar <input type="file" name="my_file"/>';
+if (is_file('images/avatar/' . $data_user['avatar'])) {
+    $html .= '               <div class="avatar"><img src="images/avatar/' . $data_user['avatar'] . '" /></div>';
+    $html .= '               <div style="clear:both;"></div>';
 }
-$html.= '               </label>';
-$html.= '           </div>';
+$html .= '               </label>';
+$html .= '           </div>';
 
-$html.= '           <div style="clear:both;"></div>';
+$html .= '           <div style="clear:both;"></div>';
 
 // Bouton Enregistrer
-$html.= '           <div class="button-section">';
-$html.= '               <input type="submit" value="Enregistrer" />';
-$html.= '           </div>';
+$html .= '           <div class="button-section">';
+$html .= '               <input type="submit" value="Enregistrer" />';
+$html .= '           </div>';
 
 // Champs caché...
-$html.= '           <input type="hidden" name="id_user" id="id_user" value="'.$id_user.'" />';
+$html .= '           <input type="hidden" name="id_user" id="id_user" value="' . $id_user . '" />';
 
-$html.= '       </form>';
-$html.= '   </div>';
-?>
+$html .= '       </form>';
+$html .= '   </div>';

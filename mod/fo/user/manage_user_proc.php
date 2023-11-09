@@ -15,7 +15,8 @@
         $h['fk_langue'] = $_POST['form_langue'];
         $h['login'] = $_POST['form_login'];
         if(!empty($_POST['form_password']))
-            $h['password'] = md5($_POST['form_password']);
+            // $h['password'] = md5($_POST['form_password']);
+            $h['password'] = password_hash($_POST['form_password'], PASSWORD_DEFAULT);
 
         // Gestion de l'avatar
         if(isset($_FILES) && !empty($_FILES) && !empty($_FILES['my_file']['name'])){
@@ -178,4 +179,3 @@
 
     $html.= '       </form>';
     $html.= '   </div>';
-?>
