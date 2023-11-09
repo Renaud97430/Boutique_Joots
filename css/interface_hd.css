@@ -67,8 +67,8 @@
 	.tag{font-size: 15px;letter-spacing: 1.1px;}
 
 	/* Footer */
-	.main_footer{height: 300px;}
-	.main_footer_content{width: 1100px;height: 300px;margin: auto;}
-	.footer_left{width:49%;height: 300px;float:left;font-family: myriad;font-size:20px;color: #ffffff;text-align: center;}
-	.footer_right{width:49%;height: 300px;float:right;text-align:center;font-family: myriad;font-size:20px;}
+	.main_footer{height: 100px;}
+	.main_footer_content{width: 1100px;height: 100px;margin: auto;}
+	.footer_left{width:49%;height: 100px;float:left;font-family: myriad;font-size:30px;color: #ffffff;text-align: center;}
+	.footer_right{width:49%;height: 100px;float:right;text-align:center;font-family: myriad;font-size:30px;}
 }

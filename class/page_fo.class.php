@@ -174,8 +174,16 @@ class Page_FO
     private function build_footer()
     {
         $this->footer = '	</div>';
-        $this->footer .= '    <div class="fo_footer">';
-
+        $this->footer .= '    <div class="main_footer">';
+        $this->footer .= '<div class="infos_legales">';
+        $this->footer .= '<div class=".footer_left">&copy; 2023 Tous droits réservés - Joots 2.0</div>';
+        $this->footer .= '<div class=".footer_right">';
+        $this->footer .= '    <a href="#">CGV</a>';
+        $this->footer .= '    <a href="#">CGU</a>';
+        $this->footer .= '    <a href="#">Mentions Légales</a>';
+        $this->footer .= '    <a href="#">Politiques de confidentialité</a>';
+        $this->footer .= '</div>';
+        $this->footer .= '</div>';
         $this->footer .= '    </div>';
         $this->footer .= '</body>';
     }

@@ -373,3 +373,29 @@ input[type="submit"]:hover{
     width: 100px;
     }
 }
+.infos_legales {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding-top: 70px;
+}
+
+.mentions {
+    display: flex;
+    gap: 30px;
+}
+
+.mentions a {
+    font-weight: 500;
+    font-size: 1rem;
+    color: var(--background-color);
+    transition: 0.3s;
+}
+
+.mentions a:hover {
+    color: var(--main-color);
+} 
+.copyright {
+    text-align: center;
+}
