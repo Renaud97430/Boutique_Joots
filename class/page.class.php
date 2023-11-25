@@ -5,9 +5,9 @@
  *
  * Permet de gérer la création d'une page HTML (du <body> au </body>
  *
- * Auteur : MOI
- * Date : 25-07-20232
- * Version : 1.0
+ * Auteur : RH
+ * Date : 01-10-2023
+ * Version : 3.1
  */
 
 class Page
