@@ -16,8 +16,7 @@ if (isset($_POST) && !empty($_POST)) {
     $h['login'] = $_POST['form_login'];
     $h['isAdmin'] = (isset($_POST['form_isAdmin']) ? 1 : 0);
     if (!empty($_POST['form_password']))
-        // $raw_password = $_POST['form_password'];
-        // $h['password'] = md5($_POST['form_password']);
+        // Hashage du mot de passe 
         $h['password'] = password_hash($_POST['form_password'], PASSWORD_DEFAULT);
 
     // Gestion de l'avatar

@@ -30,4 +30,4 @@ $html .= '   <div class="zone_pagination" id="zone_pagination"></div>';
 $html .= '<br/><br/><br/>';
 
 $html .= '</div>';
-phpinfo();
+// phpinfo();

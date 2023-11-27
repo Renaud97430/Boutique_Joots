@@ -3,12 +3,13 @@
 /**
  * Permet de gérer l'accès au BDD
  * Auteur : RH
- * Date : 30-09-2023
- * Version : 1.0
+ * Date : 03-11-2023
+ * Version : 3.2
  */
 class Data
 {
     // Variables de classe
+    private static $_instance = null;
     private $link = null;
     private $database_name = SERVEUR_BDD;
     private $user_bdd = USER_BDD;
@@ -33,6 +34,16 @@ class Data
         $sql = "SET collation_connection = 'utf8mb4_general_ci';";
         mysqli_query($this->link, $sql);
     }
+
+    // Singleton
+    // public static function getInstance()
+    // {
+    //     if (is_null(self::$_instance)) {
+    //         self::$_instance = new data();
+    //     }
+    //     return self::$_instance;
+    // }
+
 
     // Methode Public (comprendre fonction)
     public function query($query)

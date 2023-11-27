@@ -1,10 +1,8 @@
 <?php
 $route = array();
-
 // Ajax
 $route['ajax_home'] = 'mod/fo/home/ajax_home.php';
 $route['ajax_work'] = 'mod/work/ajax_work.php';
-
 // Routes pour les utilisateurs
 $route['fo_home'] = 'mod/fo/home/home.php';
 $route['fo_produit'] = 'mod/fo/produit/produit.php';
@@ -16,7 +14,6 @@ $route['fo_user'] = 'mod/fo/user/manage_user.php';
 $route['login'] = 'mod/admin/login/login.php';
 $route['logout'] = 'mod/admin/logout/logout.php';
 $route['work'] = 'mod/work/work.php';
-
 // Routes pour les administrateurs
 if (userCanAdmin()) {
     $route['home'] = 'mod/admin/home/home.php';
@@ -47,6 +44,5 @@ if (userCanAdmin()) {
     $route['manage_tva'] = 'mod/admin/shop/tva/manage_tva.php';
     $route['manage_user'] = 'mod/admin/user/manage_user.php';
     $route['manage_ville'] = 'mod/admin/ville/manage_ville.php';
-    $route['maze'] = 'mod/admin/maze/maze.php';
     $route['shop'] = 'mod/admin/shop/home_shop/home_shop.php';
 }

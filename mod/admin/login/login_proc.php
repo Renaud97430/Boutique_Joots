@@ -1,28 +1,19 @@
 <?php
 $bdd = new Data();
 $html = '';
-
 // Test retour formulaire
 if (isset($_POST) && !empty($_POST)) {
-    // Verification login et mot de passe avec les données en BDD
+    // Vérification des login et mot de passe récupérés depuis le formulaire
     $login = $_POST['login'];
-
-    // Récupération du mot de passe depuis le formulaire
     $password = $_POST['password'];
-
-    // Génération d'un hachage sécurisé en utilisant password_hash
-    // $password = password_verify($raw_password, PASSWORD_DEFAULT);
-
-    // $password = md5($_POST['password']);
-
+    // Requete SQL sur la table t_user
     $sql = "SELECT * FROM t_user WHERE login='" . addslashes($login) . "' LIMIT 1;";
-
     $rs = $bdd->query($sql);
 
     if ($rs && mysqli_num_rows($rs)) {
         $data = mysqli_fetch_assoc($rs);
+        // Vérification du mot de passe crypté
         if (!empty($password) && password_verify($password, $data['password'])) {
-            // if (!empty($password) && $password == $data['password']) {
 
             // Enregistrement des informations en session
             $_SESSION[SESSION_NAME]['id_user'] = $data['id'];
@@ -38,25 +29,6 @@ if (isset($_POST) && !empty($_POST)) {
     } else {
         $html = '<div class="login_info_error">Login Introuvable</div>';
     }
-
-
-
-    // Seconde methode (plus sécurisé mais moins ergonomique pour l'utilisateur
-    /*$sql = "SELECT * FROM t_user WHERE login='".$login."' AND password='".$password."' LIMIT 1;";
-        $rs = query($sql);
-        if($rs && mysqli_num_rows($rs)){
-            // Login OK
-            $data = mysqli_fetch_assoc($rs);
-            $_SESSION[SESSION_NAME]['id_user'] = $data['id'];
-            $_SESSION[SESSION_NAME]['nom_user'] = $data['prenom'].' '.$data['nom'];
-            $_SESSION[SESSION_NAME]['avatar'] = 'pic/upload/avatar/'.$data['avatar'];
-
-            header("location: index.php");
-        }else{
-            // Login KO
-            $message_error = '<div class="login_ko">Login impossible</div>';
-        }*/
-}
 
 // Creation de l'interface...
 $html .= '<div class="container">';
